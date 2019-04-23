@@ -1,12 +1,12 @@
 @extends('layouts.admin')
 
-@include('shared.errors')
+@include ('shared.errors')
 
 @section('content')
 
 	<h1>Create Users</h1>
 
-	{!! Form::open(['method'=>'POST', 'action'=>'AdminUsersController@store']) !!}
+	{!! Form::open(['method'=>'POST', 'action'=>'AdminUsersController@store', 'files'=>true ]) !!}
 
 		<div class="form-group">
 			{!! Form::label('name', 'Name:') !!}
@@ -31,6 +31,11 @@
 		<div class="form-group">
 			{!! Form::label('password', 'Password:') !!}
 			{!! Form::password('password', ['class'=>'form-control']) !!}
+		</div>
+
+		<div class="form-group">
+			{!! Form::label('file', 'Photo ID') !!}
+			{!! Form::file('file', null, ['class'=>'form-control']) !!}
 		</div>
 
 		<div class="form-group">
