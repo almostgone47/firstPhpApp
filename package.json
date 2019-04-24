@@ -27,5 +27,8 @@
         "vue-loader": "^15.7.0",
         "vue-template-compiler": "^2.6.10",
         "webpack": "^4.30.0"
+    },
+    "dependencies": {
+        "laravel-echo": "^1.5.3"
     }
 }
