@@ -13,8 +13,8 @@
 	<table class="table">
 		<thead>
 			<tr>
-				<td>Id</td>
-				<td>Photo</td>
+				<th>Id</th>
+				<th>Photo</th>
 				<th>Posted By</th>
 				<th>Category</th>
         <th>Title</th>
@@ -32,7 +32,7 @@
 				<td>{{ $post->user->name }}</td>
 				<td>{{ $post->category->name }}</td>
 				<td><a href="{{ route('posts.edit', $post->id) }}">{{ $post->title }}</a></td>
-				<td>{{ $post->body }}</td>
+				<td>{{ str_limit($post->body, 14) }}</td>
 				<td>{{ $post->created_at->diffForHumans() }}</td>
 				<td>{{ $post->updated_at->diffForHumans() }}</td>
 			</tr>

@@ -7,6 +7,7 @@ use App\User;
 use App\Post;
 use App\Photo;
 use App\Category;
+use App\Http\Requests;
 use App\Http\Requests\PostRequest;
 use Illuminate\Support\Facades\Auth;
 
@@ -92,7 +93,7 @@ class AdminPostsController extends Controller
 
         $categories = Category::pluck('name', 'id')->all();
 
-        return view('admin.posts.edit');
+        return view('admin.posts.edit', compact('post', 'categories'));
     }
 
     /**
@@ -104,8 +105,6 @@ class AdminPostsController extends Controller
      */
     public function update(PostRequest $request, $id)
     {
-
-        $post = Post::findOrFail($id);
 
         $input = $request->all();
 
@@ -121,7 +120,7 @@ class AdminPostsController extends Controller
 
         }
 
-        $user->posts()->create($input);
+        Auth::user()->posts()->whereId($id)->first()->update($input);
 
         return redirect('/admin/posts');
     }
@@ -134,7 +133,11 @@ class AdminPostsController extends Controller
      */
     public function destroy($id)
     {
-        $post = Post::findOrFail()->delete();
+        $post = Post::findOrFail($id);
+
+        unlink(public_path() . $post->photo->file);
+
+        $post->delete();
 
         return redirect('/admin/posts');
     }
