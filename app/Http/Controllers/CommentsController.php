@@ -44,9 +44,7 @@ class CommentsController extends Controller
         $data = [
 
             'post_id'=> $request->post_id,
-            'author' => $user->name,
-            'email' => $user->email,
-            'photo' => $user->photo->file,
+            'user_id' => $user->id,
             'body' => $request->body,
 
         ];

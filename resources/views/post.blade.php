@@ -61,22 +61,43 @@
     <!-- Comment -->
         <div class="media">
             <a class="pull-left" href="#">
-                <img class="media-object" src="/images/{{ $comment->author->photo }}" alt="" height="64px">
+                <img class="media-object" src="/images/{{ $comment->user->photo->file }}" alt="" height="64px">
             </a>
             <div class="media-body">
-                <h4 class="media-heading">{{ $comment->author }}
+                <h4 class="media-heading">{{ $comment->user->name }}
                     <small>{{ $comment->created_at->diffForHumans() }}</small>
                 </h4>
                 <p>{{ $comment->body }}</p>
-                <div class="media">
+            @foreach($comment->replies as $reply)
+                <div class="media " id="nested-comment">
               <a class="pull-left" href="#">
-                  <img class="media-object" src="http://placehold.it/64x64" alt="">
+                  <img class="media-object" src="/images/{{ $reply->user->photo->file }}" alt="" height="64">
               </a>
               <div class="media-body">
-                  <h4 class="media-heading">Nested Start Bootstrap
-                      <small>August 25, 2014 at 9:30 PM</small>
+                  <h4 class="media-heading">{{ $reply->user->name }}
+                      <small>{{ $reply->created_at }}</small>
                   </h4>
-                  Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                        <p> {{ $reply->body }}}</p>
+            @endforeach
+                    @if(Auth::check())
+                    <!-- Comment Replies Form -->
+                    <div class="well">
+                        <h4>Reply:</h4>
+                        {!! Form::open(['method'=>'POST', 'action'=>['CommentRepliesController@store']]) !!}
+
+                            <input type="hidden" name="comment_id" value="{{ $comment->id }}">
+
+                            <div class="form-group">
+                                {!! Form::textarea('body', null, ['class'=>'form-control', 'rows'=>"2"]) !!}
+                            </div>
+
+                            <div class="form-group">
+                                {!! Form::submit('Comment', ['class'=>'btn btn-primary'])!!}
+                            </div>
+
+                        {!! Form::close() !!}
+                    </div>
+                    @endif
               </div>
           </div>
             </div>

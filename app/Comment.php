@@ -8,11 +8,9 @@ class Comment extends Model
 {
     protected $fillable = [
         'post_id',
-        'author',
-        'photo',
-        'email',
-        'body',
+        'user_id',
         'is_active',
+        'body',
     ];
 
     public function replies(){
@@ -29,7 +27,7 @@ class Comment extends Model
 
     public function user(){
 
-        return $this->belongsTo(App\User);
+        return $this->belongsTo('App\User');
 
     }
 }

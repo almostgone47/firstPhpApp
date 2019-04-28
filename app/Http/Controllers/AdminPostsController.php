@@ -7,6 +7,8 @@ use App\User;
 use App\Post;
 use App\Photo;
 use App\Category;
+use App\Comment;
+use App\CommentReply;
 use App\Http\Requests;
 use App\Http\Requests\PostRequest;
 use Illuminate\Support\Facades\Auth;
@@ -148,7 +150,7 @@ class AdminPostsController extends Controller
 
         $comments = $post->comments()->whereIsActive(1)->get();
 
-        return view('post', compact('post', 'comments'));
+        return view('post', compact('post', 'comments', 'replies'));
 
     }
 }

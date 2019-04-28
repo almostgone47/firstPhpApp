@@ -21,8 +21,8 @@
 			@foreach($comments as $comment)
 			<tr>
 				<td>{{ $comment->id }}</td>
-				<td>{{ $comment->author }}</td>
-				<td>{{ $comment->email }}</td>
+				<td>{{ $comment->user->name }}</td>
+				<td>{{ $comment->user->email }}</td>
 				<td>{{ $comment->body }}</td>
 				<td>{{ $comment->created_at->diffForHumans() }}</td>
 				<td><a href="{{ route('home.post', $comment->post->id)}}">View Post</a></td>
