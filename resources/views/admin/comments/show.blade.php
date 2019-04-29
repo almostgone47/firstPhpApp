@@ -26,7 +26,7 @@
 				<td>{{ $comment->body }}</td>
 				<td>{{ $comment->created_at->diffForHumans() }}</td>
 				<td><a href="{{ route('home.post', $comment->post->id)}}">View Post</a></td>
-				<td><a href="{{ route('comments.show', $post->id )}}"> View Comments</a></td>
+				<td><a href="{{ route('replies.show', $comment->id )}}"> View Replies</a></td>
 			</tr>
 			@endforeach
 		@else

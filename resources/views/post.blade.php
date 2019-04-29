@@ -61,7 +61,7 @@
     <!-- Comment -->
         <div class="media">
             <a class="pull-left" href="#">
-                <img class="media-object" src="/images/{{ $comment->user->photo->file }}" alt="" height="64px">
+                <img class="media-object" src="{{ Auth::user()->gravatar }}" alt="" height="64px">
             </a>
             <div class="media-body">
                 <h4 class="media-heading">{{ $comment->user->name }}
@@ -69,15 +69,17 @@
                 </h4>
                 <p>{{ $comment->body }}</p>
             @foreach($comment->replies as $reply)
+                @if($reply->is_active == 1)
                 <div class="media " id="nested-comment">
-              <a class="pull-left" href="#">
-                  <img class="media-object" src="/images/{{ $reply->user->photo->file }}" alt="" height="64">
-              </a>
-              <div class="media-body">
+                    <a class="pull-left" href="#">
+                        <img class="media-object" src="{{ Auth::user()->gravatar }}" alt="" height="64">
+                    </a>
+                <div class="media-body">
                   <h4 class="media-heading">{{ $reply->user->name }}
                       <small>{{ $reply->created_at }}</small>
                   </h4>
                         <p> {{ $reply->body }}}</p>
+                @endif
             @endforeach
                     @if(Auth::check())
                     <!-- Comment Replies Form -->
@@ -98,8 +100,8 @@
                         {!! Form::close() !!}
                     </div>
                     @endif
-              </div>
-          </div>
+                    </div>
+                </div>
             </div>
         </div>
         @endforeach
