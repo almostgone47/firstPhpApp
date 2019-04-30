@@ -68,7 +68,7 @@ class AdminPostsController extends Controller
 
         $user->posts()->create($input);
 
-        return redirect('/admin/posts');
+        return redirect('/admin/posts')->with('success', 'The post has been created.');
     }
 
     /**
@@ -125,7 +125,7 @@ class AdminPostsController extends Controller
 
         Auth::user()->posts()->whereId($id)->first()->update($input);
 
-        return redirect('/admin/posts');
+        return redirect('/admin/posts')->with('success', 'The post has been updated.');
     }
 
     /**
@@ -142,7 +142,7 @@ class AdminPostsController extends Controller
 
         $post->delete();
 
-        return redirect('/admin/posts');
+        return redirect('/admin/posts')->with('warning', 'The post has been deleted.');
     }
 
     public function post($id){
@@ -151,7 +151,7 @@ class AdminPostsController extends Controller
 
         $comments = $post->comments()->whereIsActive(1)->get();
 
-        return view('post', compact('post', 'comments', 'replies'));
+        return view('post', compact('post', 'comments'));
 
     }
 }

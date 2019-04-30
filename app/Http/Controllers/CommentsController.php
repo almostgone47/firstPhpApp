@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CommentRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Comment;
@@ -37,7 +38,7 @@ class CommentsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CommentRequest $request)
     {
         $user = Auth::user();
 
@@ -53,7 +54,7 @@ class CommentsController extends Controller
 
         $request->session()->flash('comment_message', 'Comment submitted');
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'The comment has been saved.');
     }
 
     /**
@@ -89,13 +90,13 @@ class CommentsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CommentRequest $request, $id)
     {
         $comment = Comment::findOrFail($id);
 
         $comment->update($request->all());
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'The comment has been updated.');
     }
 
     /**
@@ -108,6 +109,6 @@ class CommentsController extends Controller
     {
         Comment::findOrFail($id)->delete();
 
-        return redirect()->back();
+        return redirect()->back()->with('warning', 'The comment has been updated.');
     }
 }

@@ -1,8 +1,10 @@
 @extends('layouts.admin')
 
-@include ('shared.errors')
+@include('shared.errors')
 
 @section('content')
+
+@include('shared.tinyeditor')
 
 	<h1>Create Post</h1>
 

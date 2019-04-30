@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Photo;
+use Illuminate\Http\Request;
+use App\Http\Requests\MediaRequest;
 
 class AdminMediasController extends Controller
 {
@@ -21,7 +22,7 @@ class AdminMediasController extends Controller
 
     }
 
-    public function store(Request $request){
+    public function store(MediaRequest $request){
 
         $file = $request->file('file');
 
@@ -31,7 +32,7 @@ class AdminMediasController extends Controller
 
         Photo::create(['file'=>$name]);
 
-        return redirect('/admin/medias');
+        return redirect('/admin/medias')->with('success', 'The media has been saved.');
 
     }
 
@@ -39,7 +40,7 @@ class AdminMediasController extends Controller
 
         $photo = Photo::findOrFail($id)->delete();
 
-        return redirect('/admin/medias');
+        return redirect('/admin/medias')->with('warning', 'The media has been deleted.');
 
     }
 }

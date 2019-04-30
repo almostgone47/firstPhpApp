@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CommentReplyRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\CommentReply;
@@ -15,7 +16,7 @@ class CommentRepliesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CommentReplyRequest $request)
     {
         $user = Auth::user();
 
@@ -31,7 +32,7 @@ class CommentRepliesController extends Controller
 
         $request->session()->flash('comment_message', 'Comment submitted');
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'The category has been saved.');
     }
 
     /**
@@ -67,11 +68,11 @@ class CommentRepliesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CommentReplyRequest $request, $id)
     {
         CommentReply::findOrFail($id)->update($request->all());
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'The reply has been updated.');
     }
 
     /**
@@ -84,6 +85,6 @@ class CommentRepliesController extends Controller
     {
         CommentReply::findOrFail($id)->delete();
 
-        return redirect()->back();
+        return redirect()->back()->with('warning', 'The reply has been deleted.');
     }
 }

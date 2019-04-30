@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use Illuminate\Http\Request;
+use App\Http\Requests\CategoryRequest;
 
 class AdminCategoriesController extends Controller
 {
@@ -37,11 +38,11 @@ class AdminCategoriesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
         Category::create($request->all());
 
-        return redirect('/admin/categories/create');
+        return redirect('/admin/categories/create')->with('success', 'The category has been saved.');
     }
 
     /**
@@ -75,13 +76,13 @@ class AdminCategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CategoryRequest $request, $id)
     {
         $category = Category::findOrFail($id);
 
         $category->update($request->all());
 
-        return redirect('/admin/categories');
+        return redirect('/admin/categories')->with('success', 'The category has been updated.');
     }
 
     /**
@@ -94,6 +95,6 @@ class AdminCategoriesController extends Controller
     {
         Category::findOrFail($id)->delete();
 
-        return redirect('/admin/categories');
+        return redirect('/admin/categories')->with('warning', 'The category has been deleted.');
     }
 }
